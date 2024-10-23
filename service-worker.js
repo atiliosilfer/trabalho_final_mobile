@@ -1,15 +1,18 @@
-// service-worker.js
- 
 // Define o nome da sua cache
-const CACHE_NAME = 'cep-app-cache-v1';
+const CACHE_NAME = 'cep-app-cache-v4';
  
 // Lista de recursos a serem armazenados em cache
 const urlsToCache = [
-  '/',
-  'index.html',
-  'style.css',
-  'script.js',
-  'icon.png',  // Certifique-se de incluir o ícone na lista se ele for usado na sua PWA
+  './',
+  './src/index.html',
+  './css/style.css',
+  './js/main.js',
+  './js/model/Item.js',
+  './js/app/ItemManager.js',
+  './js/client/ExchangeRate.js',
+  './js/app/ExpenseApp.js',
+  './image/icon.png',
+  './image/iconb.png',
 ];
  
 // Evento de instalação do Service Worker
@@ -43,6 +46,11 @@ self.addEventListener('activate', (event) => {
  
 // Evento fetch
 self.addEventListener('fetch', (event) => {
+  if (event.request.url.includes('exchangerate-api.com')) {
+    // Não cacheia as requisições para a API de câmbio
+    return fetch(event.request);
+  }
+
   event.respondWith(
     caches.match(event.request)
       .then((response) => {
@@ -50,4 +58,3 @@ self.addEventListener('fetch', (event) => {
       })
   );
 });
- 
