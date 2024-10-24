@@ -176,6 +176,6 @@ export default class ExpenseApp {
     this.descriptionInput.value = '';
     this.amountInput.value = '';
     this.valueInput.value = '';
-    this.sendButton.innerHTML = 'Salvar';
+    this.sendButton.innerHTML = 'Adicionar';
   }
 }
