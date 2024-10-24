@@ -1,5 +1,6 @@
 // Define o nome da sua cache
-const CACHE_NAME = 'cep-app-cache-v4';
+const CACHE_NAME = 'cep-app-cache-v5';
+
  
 // Lista de recursos a serem armazenados em cache
 const urlsToCache = [
