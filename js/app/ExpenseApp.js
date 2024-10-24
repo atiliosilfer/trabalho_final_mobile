@@ -7,7 +7,7 @@ import ExchangeRate from '../client/ExchangeRate.js';
  * @class
  * @name ExpenseApp
  * @description Aplicação de despesas que converte valores de uma moeda para outra
-*/
+ */
 export default class ExpenseApp {
   constructor() {
     this.sendButton = document.getElementById('send');
@@ -112,6 +112,7 @@ export default class ExpenseApp {
   }
 
   fillEditForm(event) {
+    this.sendButton.innerHTML = 'Editar';
     const id = event.target.closest('div').id;
     const item = this.itemManager.items[id];
 
@@ -149,22 +150,32 @@ export default class ExpenseApp {
       const deleteButton = document.createElement('button');
       deleteButton.className = 'bg-danger border-0 rounded-pill px-3';
       deleteButton.innerHTML = '<i class="fa-solid fa-trash" style="color: #ffffff"></i>';
-      deleteButton.addEventListener('click', (event) => this.deleteItem(event));
+      deleteButton.addEventListener('click', (event) => {
+        const confirmation = confirm(
+          'Tem certeza que deseja deletar este item?'
+        );
+        if (confirmation) {
+          this.deleteItem(event);
+        }
+      });
       itemDiv.appendChild(deleteButton);
 
       this.resultDiv.appendChild(itemDiv);
     });
 
     const totalSource = this.itemManager.totalSource.toFixed(2);
-    const totalTarget = (this.itemManager.totalSource * this.exchangeRate.rate).toFixed(2);
+    const totalTarget = (
+      this.itemManager.totalSource * this.exchangeRate.rate
+    ).toFixed(2);
 
-    this.totalSumSource.innerHTML = `Total (Moeda de Origem): ${totalSource}`;
-    this.totalSumTarget.innerHTML = `Total (Moeda de Destino): ${totalTarget}`;
+    this.totalSumSource.innerHTML = `Total (Moeda de Origem): ${totalSource} ${this.sourceCurrencySelect.value}`;
+    this.totalSumTarget.innerHTML = `Total (Moeda de Destino): ${totalTarget} ${this.targetCurrencySelect.value}`;
   }
 
   clearForm() {
     this.descriptionInput.value = '';
     this.amountInput.value = '';
     this.valueInput.value = '';
+    this.sendButton.innerHTML = 'Salvar';
   }
 }
