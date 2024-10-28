@@ -5,7 +5,7 @@ const CACHE_NAME = 'cep-app-cache-v5';
 // Lista de recursos a serem armazenados em cache
 const urlsToCache = [
   './',
-  './src/index.html',
+  './index.html',
   './css/style.css',
   './js/main.js',
   './js/model/Item.js',
