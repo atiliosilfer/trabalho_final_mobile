@@ -83,7 +83,8 @@ export default class ExpenseApp {
       this.amountInput.value,
       this.valueInput.value,
       this.sourceCurrencySelect.value,
-      this.targetCurrencySelect.value
+      this.targetCurrencySelect.value,
+      this.exchangeRate.rate
     );
     this.itemManager.addItem(item);
     this.updateItemsList();
@@ -96,7 +97,8 @@ export default class ExpenseApp {
       this.amountInput.value,
       this.valueInput.value,
       this.sourceCurrencySelect.value,
-      this.targetCurrencySelect.value
+      this.targetCurrencySelect.value,
+      this.exchangeRate.rate
     );
     this.itemManager.editItem(this.itemToEditId, item);
     this.updateItemsList();
@@ -128,12 +130,14 @@ export default class ExpenseApp {
 
   updateItemsList() {
     this.resultDiv.innerHTML = '';
+    var allTotalTarget = 0;
 
     this.itemManager.items.forEach((item, index) => {
       const itemDiv = document.createElement('div');
       itemDiv.id = index;
 
-      const totalTarget = item.totalCurrent * this.exchangeRate.rate;
+      const totalTarget = item.totalCurrent * item.exchangeRate;
+      allTotalTarget =  allTotalTarget + totalTarget;
 
       const itemContent = document.createElement('strong');
       itemContent.innerHTML = `${item.description} (Qtd. ${item.amount}): ${item.totalCurrent.toFixed(
@@ -164,12 +168,9 @@ export default class ExpenseApp {
     });
 
     const totalSource = this.itemManager.totalSource.toFixed(2);
-    const totalTarget = (
-      this.itemManager.totalSource * this.exchangeRate.rate
-    ).toFixed(2);
 
-    this.totalSumSource.innerHTML = `Total (Moeda de Origem): ${totalSource} ${this.sourceCurrencySelect.value}`;
-    this.totalSumTarget.innerHTML = `Total (Moeda de Destino): ${totalTarget} ${this.targetCurrencySelect.value}`;
+    this.totalSumSource.innerHTML = `Total (Moeda de Origem): ${totalSource}`;
+    this.totalSumTarget.innerHTML = `Total (Moeda de Destino): ${allTotalTarget.toFixed(2)}`;
   }
 
   clearForm() {
