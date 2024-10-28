@@ -43,7 +43,8 @@ export default class ItemManager {
             itemData.amount,
             itemData.value,
             itemData.sourceCurrency,
-            itemData.targetCurrency
+            itemData.targetCurrency,
+            itemData.exchangeRate
           )
       );
     }

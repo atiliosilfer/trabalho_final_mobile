@@ -5,12 +5,13 @@
  * @description Representa um item de despesa com descrição, quantidade, valor, moeda de origem e moeda de destino
  */
 export default class Item {
-  constructor(description, amount, value, sourceCurrency, targetCurrency) {
+  constructor(description, amount, value, sourceCurrency, targetCurrency, exchangeRate) {
     this.description = description;
     this.amount = parseFloat(amount);
     this.value = parseFloat(value);
     this.sourceCurrency = sourceCurrency;
     this.targetCurrency = targetCurrency;
+    this.exchangeRate = exchangeRate;
   }
 
   get totalCurrent() {
